@@ -144,13 +144,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="charconversion.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Commandline.cpp" />
+    <ClCompile Include="HelpCommand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Win32Exception.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="charconversion.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Commandline.h" />
+    <ClInclude Include="HelpCommand.h" />
     <ClInclude Include="strings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
