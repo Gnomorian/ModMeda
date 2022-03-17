@@ -146,6 +146,10 @@
     <ClCompile Include="charconversion.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Commandline.cpp" />
+    <ClCompile Include="CommandListFileMetadata.cpp" />
+    <ClCompile Include="CommandListFolderMetadata.cpp" />
+    <ClCompile Include="CommandModifyFileMetadata.cpp" />
+    <ClCompile Include="CommandModifyFolderMetadata.cpp" />
     <ClCompile Include="HelpCommand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Win32Exception.ixx" />
@@ -154,6 +158,10 @@
     <ClInclude Include="charconversion.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Commandline.h" />
+    <ClInclude Include="CommandListFileMetadata.h" />
+    <ClInclude Include="CommandListFolderMetadata.h" />
+    <ClInclude Include="CommandModifyFileMetadata.h" />
+    <ClInclude Include="CommandModifyFolderMetadata.h" />
     <ClInclude Include="HelpCommand.h" />
     <ClInclude Include="strings.h" />
   </ItemGroup>
