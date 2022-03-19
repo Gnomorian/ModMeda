@@ -189,5 +189,77 @@ struct MusicProperties
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.videoproperties?view=winrt-22000
 struct VideoProperties
 {
-
+	enum class VideoOrientation
+	{
+		Normal = 0,
+		Rotate180 = 180,
+		Rotate270 = 270,
+		Rotate90 = 90
+	};
+	/// <summary>
+	/// sum audio and video bitrate of the video
+	/// </summary>
+	std::optional<uint32_t> bitrate;
+	/// <summary>
+	/// directors of the video
+	/// </summary>
+	std::optional<std::vector<std::wstring>> directors;
+	/// <summary>
+	/// duration of the video
+	/// </summary>
+	std::optional<std::chrono::duration<int64_t, std::milli>> duration;
+	/// <summary>
+	/// height of the video
+	/// </summary>
+	std::optional<uint32_t> height;
+	/// <summary>
+	/// collection of keywords associated with the video
+	/// </summary>
+	std::optional<std::vector<std::wstring>> keywords;
+	/// <summary>
+	/// latitude coordinate where the video was shot
+	/// </summary>
+	std::optional<double> lattitude;
+	/// <summary>
+	/// longitude coordinate where the video was shot
+	/// </summary>
+	std::optional<double> longitude;
+	/// <summary>
+	/// indicates how the video should be rotated to display it correctly
+	/// </summary>
+	std::optional<VideoOrientation> orientation;
+	/// <summary>
+	/// producers of the video
+	/// </summary>
+	std::optional<std::vector<std::wstring>> producers;
+	/// <summary>
+	/// publishers of the video
+	/// </summary>
+	std::optional<std::vector<std::wstring>> publishers;
+	/// <summary>
+	/// rating associated with a music file
+	/// The media file rating, as a value between 0 and 99.
+	/// A value of 0 indicates that the file has not been rated.
+	/// </summary>
+	std::optional<uint32_t> rating;
+	/// <summary>
+	/// the subtitle of the song
+	/// </summary>
+	std::optional<std::wstring> subtitle;
+	/// <summary>
+	/// the title of the song
+	/// </summary>
+	std::optional<std::wstring> title;
+	/// <summary>
+	/// width of the video
+	/// </summary>
+	std::optional<uint32_t> width;
+	/// <summary>
+	/// the songwriters
+	/// </summary>
+	std::optional<std::vector<std::wstring>> writers;
+	/// <summary>
+	/// year that the song was released
+	/// </summary>
+	std::optional<uint32_t> year;
 };
