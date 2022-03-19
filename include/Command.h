@@ -3,9 +3,11 @@
 #include <iostream>
 #include <filesystem>
 #include "Commandline.h"
+
 class Command
 {
 protected:
+	std::unique_ptr<std::wofstream> nullOutput;
 	std::wostream* output;
 	Commandline commandline;
 public:
@@ -19,6 +21,10 @@ protected:
 	virtual void onEmptyPropertyGroup();
 	virtual void onAllPropertyGroup();
 	virtual void onBasicPropertyGroup();
+	virtual void onDocumentPropertyGroup();
+	virtual void onMusicPropertyGroup();
+	virtual void onVideoPropertyGroup();
+	virtual void onAttriburePropertyGroup();
 };
 
 std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline);

@@ -20,14 +20,19 @@ auto ignoreCaseEquals(const auto& str1, const auto& str2) -> bool
 }
 
 Command::Command()
-	: output{ new std::wofstream{} }
+	: nullOutput{ std::make_unique<std::wofstream>() }
 	, commandline{}
+	, output{ nullOutput.get() }
 {}
 
 Command::Command(std::wostream* output, const Commandline& commandline)
-	: output{output}
+	: nullOutput{}
+	, output{output}
 	, commandline{commandline}
-{}
+{
+	if (output == nullptr)
+		nullOutput = std::make_unique<std::wofstream>();
+}
 
 Command::~Command() = default;
 
@@ -57,6 +62,18 @@ void Command::onAllPropertyGroup()
 {}
 
 void Command::onBasicPropertyGroup()
+{}
+
+void Command::onDocumentPropertyGroup()
+{}
+
+void Command::onMusicPropertyGroup()
+{}
+
+void Command::onVideoPropertyGroup()
+{}
+
+void Command::onAttriburePropertyGroup()
 {}
 
 void Command::handlePropertyGroupCase()
