@@ -145,7 +145,7 @@ struct MusicProperties
 	/// <summary>
 	/// duration of the song in milliseconds
 	/// </summary>
-	std::optional<std::chrono::milliseconds> duration;
+	std::optional<std::chrono::duration<int64_t, std::ratio_multiply<std::ratio<100>, std::nano>>> duration;
 	/// <summary>
 	/// names of music genres that the song belongs to
 	/// </summary>

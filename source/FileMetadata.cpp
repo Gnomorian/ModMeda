@@ -17,7 +17,21 @@ FileMetadata::FileMetadata(std::filesystem::path file)
 
 BasicProperties FileMetadata::basicProperties() const
 {
-    return BasicProperties();
+    const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
+    const auto winrtprops{ file.GetBasicPropertiesAsync().get() };
+    using Type = decltype(winrtprops.DateModified());
+    auto getTm = [](const auto&& DateTime)
+    {
+        const auto t_c{ Type::clock::to_time_t(DateTime) };
+        tm time{};
+        (void)localtime_s(&time, &t_c);
+        return time;
+    };
+    return BasicProperties{
+        .dateModified{getTm(winrtprops.DateModified())},
+        .itemDate{getTm(winrtprops.ItemDate())},
+        .size{winrtprops.Size()}
+    };
 }
 
 std::map<std::wstring, PropertyVariant> FileMetadata::allProperties() const
@@ -47,19 +61,62 @@ std::map<std::wstring, PropertyVariant> FileMetadata::allProperties() const
     return stdproperties;
 }
 
+auto ivecstrToStd = [](const auto&& ivec)
+{
+    std::vector<std::wstring> stdvec;
+    for (const auto& s : ivec)
+        stdvec.emplace_back(s);
+    return stdvec;
+};
+
 DocumentProperties FileMetadata::documentProperties() const
 {
-    return DocumentProperties();
+    const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
+    const auto docProperties{ file.Properties().GetDocumentPropertiesAsync().get() };
+    return DocumentProperties{ 
+        .author{ivecstrToStd(docProperties.Author())},
+        .comment{static_cast<std::wstring>(docProperties.Comment())},
+        .keywords{ivecstrToStd(docProperties.Keywords())},
+        .title{static_cast<std::wstring>(docProperties.Title())}
+    };
 }
+
+//using TimeSpan = std::chrono::duration<int64_t, impl::filetime_period>;
+//using DateTime = std::chrono::time_point<clock, TimeSpan>;
 
 MusicProperties FileMetadata::musicProperties() const
 {
-    return MusicProperties();
+    const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
+    const auto musicProperties{ file.Properties().GetMusicPropertiesAsync().get() };
+
+    return MusicProperties{
+        .album{static_cast<std::wstring>(musicProperties.Album())},
+        .albumArtist{static_cast<std::wstring>(musicProperties.AlbumArtist())},
+        .artist{static_cast<std::wstring>(musicProperties.Artist())},
+        .bitrate{musicProperties.Bitrate()},
+        .composers{ivecstrToStd(musicProperties.Composers())},
+        .conductors{ivecstrToStd(musicProperties.Conductors())},
+        .duration{musicProperties.Duration()},
+        .genre{ivecstrToStd(musicProperties.Genre())},
+        .producers{ivecstrToStd(musicProperties.Producers())},
+        .publisher{static_cast<std::wstring>(musicProperties.Publisher())},
+        .rating{musicProperties.Rating()},
+        .subtitle{static_cast<std::wstring>(musicProperties.Subtitle())},
+        .title{static_cast<std::wstring>(musicProperties.Title())},
+        .trackNumber{musicProperties.TrackNumber()},
+        .writers{ivecstrToStd(musicProperties.Writers())},
+        .year{musicProperties.Year()}
+    };
 }
 
 VideoProperties FileMetadata::videoProperties() const
 {
     return VideoProperties();
+}
+
+ImageProperties FileMetadata::imageProperties() const
+{
+    return ImageProperties();
 }
 
 PropertyVariant FileMetadata::propertyValueToVariant(const winrt::Windows::Foundation::IPropertyValue& property) const

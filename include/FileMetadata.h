@@ -26,6 +26,7 @@ public:
 	DocumentProperties documentProperties() const;
 	MusicProperties musicProperties() const;
 	VideoProperties videoProperties() const;
+	ImageProperties imageProperties() const;
 protected:
 	PropertyVariant propertyValueToVariant(const winrt::Windows::Foundation::IPropertyValue& property) const;
 };
