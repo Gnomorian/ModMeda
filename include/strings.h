@@ -18,6 +18,7 @@ constexpr std::wstring_view HelpText{
 		the key string to modify for the given <filename> or files that match <filter>. keys can be listed by action=list.
 	value=<valuestring>
 		what to change the value of the given key to.
+	propertygroup=<basic|attribute|music|video|document>
 	type=<>
 		when the key doesnt exist in the file, we need to know what the type of the new metadata key is going to be.
 Examples:

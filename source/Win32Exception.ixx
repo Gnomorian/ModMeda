@@ -5,8 +5,8 @@ export module Win32Exception;
 
 export class Win32Exception : public std::exception
 {
-	uint32_t errorCode{ GetLastError() };
 	void* msgBuffer{ nullptr };
+	uint32_t errorCode{ GetLastError() };
 public:
 	Win32Exception()
 	{

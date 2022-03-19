@@ -14,6 +14,8 @@ Command::Command(std::wostream* output)
 	: output{output}
 {}
 
+Command::~Command() = default;
+
 std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline)
 {
 	// could be a file in the future or some other stream.
@@ -39,6 +41,6 @@ std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline)
 	catch (std::out_of_range&)
 	{
 		*output << L"did not supply list or modify, nothing to do!\n\n";
-		return std::make_unique<HelpCommand>(&std::wcout);
 	}
+	return std::make_unique<HelpCommand>(&std::wcout);
 }

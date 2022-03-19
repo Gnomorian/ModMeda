@@ -49,6 +49,9 @@
     <ClInclude Include="include\strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PropertyGroups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\charconversion.cpp">

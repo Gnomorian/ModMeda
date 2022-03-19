@@ -9,6 +9,7 @@ protected:
 public:
 	Command();
 	Command(std::wostream* output);
+	virtual ~Command();
 	virtual void execute() = 0;
 };
 

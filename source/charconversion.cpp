@@ -17,7 +17,7 @@ std::u8string wstring_to_utf8(std::wstring_view from)
 			{
 				throw Win32Exception{};
 			}
-			return size;
+			return static_cast<size_t>(size);
 		}()
 	};
 	std::vector<char> buffer(utf8BufferSize);

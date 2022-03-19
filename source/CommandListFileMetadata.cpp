@@ -23,16 +23,14 @@ void CommandListFileMetadata::execute()
     auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get()};
     if (file)
     {
-
-        //auto basicProperties{ file.Properties().RetrievePropertiesAsync({}).get() };
         auto basicProperties{ file.GetBasicPropertiesAsync().get().RetrievePropertiesAsync({}).get() };
         for (int i{}; const auto & p : basicProperties)
         {
             const auto key{ p.Key().c_str() };
-            std::wcout << ++i << L") " << key;
+            *output << ++i << L") " << key;
             if (p.Value())
             {
-                std::wcout << " = ";
+                *output << L" = ";
                 auto value{ p.Value().as<IPropertyValue>() };
                 const auto propertyType{ value.Type() };
                 switch (propertyType)
@@ -43,42 +41,42 @@ void CommandListFileMetadata::execute()
                     using Type = decltype(timepoint);
                     const auto t_c{ Type::clock::to_time_t(timepoint) };
                     tm time{};
-                    const auto result{ localtime_s(&time, &t_c) };
-                    std::wcout << std::put_time(&time, L"%F %T.\n");
+                    (void) localtime_s(&time, &t_c);
+                    *output << std::put_time(&time, L"%F %T.\n");
                     break;
                 }
                 case PropertyType::String:
                 {
                     const auto string{ value.GetString() };
-                    std::wcout << string.c_str();
+                    *output << string.c_str();
                     break;
                 }
                 case PropertyType::Boolean:
                 {
                     const auto boolean{ value.GetBoolean() };
-                    std::wcout << std::boolalpha << boolean;
+                    *output << std::boolalpha << boolean;
                     break;
                 }
                 case PropertyType::Double:
-                    std::wcout << value.GetDouble();
+                    *output << value.GetDouble();
                     break;
                 case PropertyType::Char16:
-                    std::wcout << static_cast<wchar_t>(value.GetChar16());
+                    *output << static_cast<wchar_t>(value.GetChar16());
                     break;
                 case PropertyType::Int16:
-                    std::wcout << static_cast<int16_t>(value.GetInt16());
+                    *output << static_cast<int16_t>(value.GetInt16());
                     break;
                 case PropertyType::UInt32:
-                    std::wcout << static_cast<uint32_t>(value.GetUInt32());
+                    *output << static_cast<uint32_t>(value.GetUInt32());
                     break;
                 case PropertyType::Int32:
-                    std::wcout << static_cast<int32_t>(value.GetInt32());
+                    *output << static_cast<int32_t>(value.GetInt32());
                     break;
                 case PropertyType::Int64:
-                    std::wcout << static_cast<int64_t>(value.GetInt64());
+                    *output << static_cast<int64_t>(value.GetInt64());
                     break;
                 case PropertyType::UInt64:
-                    std::wcout << static_cast<uint64_t>(value.GetUInt64());
+                    *output << static_cast<uint64_t>(value.GetUInt64());
                     break;
                 case PropertyType::StringArray:
                 {
@@ -89,17 +87,17 @@ void CommandListFileMetadata::execute()
                         if (first)
                             first = false;
                         else
-                            std::wcout << L';';
-                        std::wcout << L'"' << str.c_str() << L'"';
+                            *output << L';';
+                        *output << L'"' << str.c_str() << L'"';
 
                     }
                     break;
                 }
                 default:
-                    std::wcout << L"? type = " << static_cast<int>(propertyType);
+                    *output << L"? type = " << static_cast<int>(propertyType);
                 }
             }
-            std::wcout << std::endl;
+            *output << std::endl;
         }
     }
 }
