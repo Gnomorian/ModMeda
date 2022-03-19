@@ -49,7 +49,10 @@
     <ClInclude Include="include\strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PropertyGroups.h">
+    <ClInclude Include="include\FileMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PropertyGroups.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -82,6 +85,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Win32Exception.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FileMetadata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

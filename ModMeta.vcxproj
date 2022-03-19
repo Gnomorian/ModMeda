@@ -132,9 +132,10 @@
     <ClInclude Include="include\CommandListFolderMetadata.h" />
     <ClInclude Include="include\CommandModifyFileMetadata.h" />
     <ClInclude Include="include\CommandModifyFolderMetadata.h" />
+    <ClInclude Include="include\FileMetadata.h" />
     <ClInclude Include="include\HelpCommand.h" />
+    <ClInclude Include="include\PropertyGroups.h" />
     <ClInclude Include="include\strings.h" />
-    <ClInclude Include="PropertyGroups.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\charconversion.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="source\CommandListFolderMetadata.cpp" />
     <ClCompile Include="source\CommandModifyFileMetadata.cpp" />
     <ClCompile Include="source\CommandModifyFolderMetadata.cpp" />
+    <ClCompile Include="source\FileMetadata.cpp" />
     <ClCompile Include="source\HelpCommand.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Win32Exception.ixx" />

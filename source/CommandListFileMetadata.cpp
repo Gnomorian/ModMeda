@@ -7,7 +7,6 @@
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <iomanip>
 #include <chrono>
-#include "HelpCommand.h"
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage;
