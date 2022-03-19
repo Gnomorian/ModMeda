@@ -7,22 +7,10 @@
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <iomanip>
 #include <chrono>
+#include "FileMetadata.h"
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage;
-
-auto ignoreCaseEquals(const auto& str1, const auto& str2) -> bool
-{
-    return std::is_permutation(
-        std::begin(str1),
-        std::end(str1),
-        std::begin(str2),
-        [](const auto& a, const auto& b)
-        {
-            return std::tolower(a) == std::tolower(b);
-        }
-    );
-}
 
 CommandListFileMetadata::CommandListFileMetadata(std::wostream* output, const Commandline& commandline)
 	: Command{output, commandline }
@@ -124,7 +112,40 @@ void CommandListFileMetadata::listBasicProperties(const std::filesystem::path& f
 
 void CommandListFileMetadata::onAllPropertyGroup()
 {
-    listAllProperties(normaliseFilename());
+    //listAllProperties(normaliseFilename());
+    const auto filename{ normaliseFilename() };
+    FileMetadata meta{ filename };
+    const auto properties{ meta.allProperties() };
+    *output << L"All properties for " << filename << std::endl;
+    for (int i{ 0 }; const auto& [key, value] : properties)
+    {
+        *output << ++i << L") " << key << L" = ";
+        std::visit(
+            [this](const auto& value) 
+            {
+                using Type = std::decay_t<decltype(value)>;
+                constexpr auto IsStreamable{
+                    std::is_arithmetic<Type>::value || std::is_same<std::wstring, Type>::value
+                };
+                if constexpr (IsStreamable)
+                    *output << value << std::endl; 
+                else if constexpr (std::is_same<std::vector<std::wstring>, Type>{})
+                {
+                    for(const auto& str : value)
+                        *output << str << L";";
+                    *output << std::endl;
+                }
+                else if constexpr (std::is_same_v<std::monostate, Type>)
+                {
+                    *output << "***EMPTY***" << std::endl;
+                }
+                else
+                {
+                    *output << "***UNKNOWN***" << std::endl;
+                }
+            }, 
+            value);
+    }
 }
 
 void CommandListFileMetadata::onBasicPropertyGroup()
