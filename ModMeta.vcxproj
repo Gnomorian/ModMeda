@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,6 +87,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -96,6 +98,8 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp20</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,17 +108,6 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="charconversion.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="Commandline.h" />
-    <ClInclude Include="CommandListFileMetadata.h" />
-    <ClInclude Include="CommandListFolderMetadata.h" />
-    <ClInclude Include="CommandModifyFileMetadata.h" />
-    <ClInclude Include="CommandModifyFolderMetadata.h" />
-    <ClInclude Include="HelpCommand.h" />
-    <ClInclude Include="strings.h" />
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="charconversion.cpp" />
     <ClCompile Include="Command.cpp" />
@@ -133,6 +126,17 @@
     <Text Include="readme.txt">
       <DeploymentContent>false</DeploymentContent>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\charconversion.h" />
+    <ClInclude Include="include\Command.h" />
+    <ClInclude Include="include\Commandline.h" />
+    <ClInclude Include="include\CommandListFileMetadata.h" />
+    <ClInclude Include="include\CommandListFolderMetadata.h" />
+    <ClInclude Include="include\CommandModifyFileMetadata.h" />
+    <ClInclude Include="include\CommandModifyFolderMetadata.h" />
+    <ClInclude Include="include\HelpCommand.h" />
+    <ClInclude Include="include\strings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
