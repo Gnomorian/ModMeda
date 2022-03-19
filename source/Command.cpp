@@ -8,10 +8,12 @@
 
 Command::Command()
 	: output{ new std::wofstream{} }
+	, commandline{}
 {}
 
-Command::Command(std::wostream* output)
+Command::Command(std::wostream* output, const Commandline& commandline)
 	: output{output}
+	, commandline{commandline}
 {}
 
 Command::~Command() = default;

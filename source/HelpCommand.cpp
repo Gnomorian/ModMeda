@@ -3,7 +3,7 @@
 #include <iostream>
 
 HelpCommand::HelpCommand(std::wostream* output)
-	: Command{output}
+	: Command{ output, Commandline{} }
 {}
 
 void HelpCommand::execute()

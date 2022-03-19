@@ -7,20 +7,71 @@
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <iomanip>
 #include <chrono>
+#include "HelpCommand.h"
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage;
 
-CommandListFileMetadata::CommandListFileMetadata(std::wostream* output, const Commandline& commandline)
-	: Command{output}
-	, commandline{commandline}
-{}
+auto ignoreCaseEquals(const auto& str1, const auto& str2) -> bool
+{
+    return std::is_permutation(
+        std::begin(str1),
+        std::end(str1),
+        std::begin(str2),
+        [](const auto& a, const auto& b)
+        {
+            return std::tolower(a) == std::tolower(b);
+        }
+    );
+}
 
+CommandListFileMetadata::CommandListFileMetadata(std::wostream* output, const Commandline& commandline)
+	: Command{output, commandline }
+{}
+// v|attribute|music|video|document
 void CommandListFileMetadata::execute()
 {
 	const auto filename{ normaliseFilename() };
+    if (!commandline.hasKey(L"propertygroup"))
+        listAllProperties(filename);
+    else
+    {
+        const auto propertyGroup{ commandline.getAtKey(L"propertygroup").second };
+        if (ignoreCaseEquals(propertyGroup, L"all"))
+            listAllProperties(filename);
+        else if (ignoreCaseEquals(propertyGroup, L"basic"))
+            listBasicProperties(filename);
+        else
+        {
+            *output << L"Unknown property group '" << propertyGroup << L'\'' << std::endl;
+            HelpCommand{ output }.execute();
+        }
+    }
+}
+
+std::filesystem::path CommandListFileMetadata::normaliseFilename() const
+{
+	const auto filename{ commandline.getAtKey(L"filename").second };
+	std::filesystem::path filenamePath{ filename };
+	if (filenamePath.has_parent_path())
+	{
+		return filenamePath;
+	}
+	else if (commandline.hasKey(L"path"))
+	{
+		const std::filesystem::path parentPath{ commandline.getAtKey(L"path").second };
+		return parentPath / filenamePath;
+	}
+	else
+	{
+		return std::filesystem::current_path() /= filenamePath;
+	}
+}
+
+void CommandListFileMetadata::listAllProperties(const std::filesystem::path& filename) const
+{
     init_apartment();
-    auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get()};
+    auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
     if (file)
     {
         auto basicProperties{ file.GetBasicPropertiesAsync().get().RetrievePropertiesAsync({}).get() };
@@ -41,7 +92,7 @@ void CommandListFileMetadata::execute()
                     using Type = decltype(timepoint);
                     const auto t_c{ Type::clock::to_time_t(timepoint) };
                     tm time{};
-                    (void) localtime_s(&time, &t_c);
+                    (void)localtime_s(&time, &t_c);
                     *output << std::put_time(&time, L"%F %T.\n");
                     break;
                 }
@@ -102,21 +153,6 @@ void CommandListFileMetadata::execute()
     }
 }
 
-std::filesystem::path CommandListFileMetadata::normaliseFilename() const
+void CommandListFileMetadata::listBasicProperties(const std::filesystem::path& filename) const
 {
-	const auto filename{ commandline.getAtKey(L"filename").second };
-	std::filesystem::path filenamePath{ filename };
-	if (filenamePath.has_parent_path())
-	{
-		return filenamePath;
-	}
-	else if (commandline.hasKey(L"path"))
-	{
-		const std::filesystem::path parentPath{ commandline.getAtKey(L"path").second };
-		return parentPath / filenamePath;
-	}
-	else
-	{
-		return std::filesystem::current_path() /= filenamePath;
-	}
 }

@@ -48,6 +48,10 @@ std::pair<std::wstring, std::wstring> Commandline::splitByEquals(std::wstring_vi
     {
         const auto equalsItr{ argument.begin() + offset };
         std::wstring_view key{ argument.begin(), equalsItr };
+        for (auto& c : key)
+        {
+            const_cast<wchar_t&>(c) = static_cast<wchar_t>(std::tolower(c));
+        }
         std::wstring_view value(equalsItr + 1, argument.end());
         return std::make_pair(std::wstring{key}, std::wstring{value});
     }

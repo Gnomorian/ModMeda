@@ -6,9 +6,10 @@ class Command
 {
 protected:
 	std::wostream* output;
+	Commandline commandline;
 public:
 	Command();
-	Command(std::wostream* output);
+	Command(std::wostream* output, const Commandline& commandline);
 	virtual ~Command();
 	virtual void execute() = 0;
 };
