@@ -14,7 +14,7 @@ public:
 	Commandline();
 	Commandline(int argc, wchar_t* args[]);
 	bool hasKey(std::wstring_view key) const noexcept;
-	std::pair<const std::wstring, std::wstring> getAtKey(std::wstring_view key);
+	std::pair<const std::wstring, std::wstring> getAtKey(std::wstring_view key) const;
 protected:
 	void initializeArguments(int argc, wchar_t* args[]);
 	std::pair<std::wstring, std::wstring> splitByEquals(std::wstring_view argument) const noexcept;

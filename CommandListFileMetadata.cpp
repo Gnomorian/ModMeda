@@ -2,6 +2,7 @@
 #include <variant>
 #include <Windows.h>
 #include <Wmsdk.h>
+#include <mfidl.h>
 #pragma comment(lib, "Wmvcore.lib")
 
 CommandListFileMetadata::CommandListFileMetadata(std::wostream* output, const Commandline& commandline)
@@ -18,7 +19,7 @@ void CommandListFileMetadata::execute()
 		*output << "WMCreateEditor error, " << result;
 		return;
 	}
-	const auto filename{ commandline.getAtKey(L"filename").second };
+	const auto filename{ normaliseFilename() };
 	result = editor->Open(filename.c_str());
 	if (result != S_OK)
 	{
@@ -97,11 +98,7 @@ void CommandListFileMetadata::execute()
 		std::visit([&](const auto& variant) 
 			{
 				using Type = std::decay<decltype(variant)>::type;
-				if constexpr (std::is_integral<Type>::value)
-				{
-					*output << variant << std::endl;
-				}
-				else if constexpr (std::is_same<std::wstring, Type>{})
+				if constexpr (std::is_integral<Type>::value || std::is_same<std::wstring, Type>{})
 				{
 					*output << variant << std::endl;
 				}
@@ -113,7 +110,26 @@ void CommandListFileMetadata::execute()
 			metadata.second
 		);
 	}
-	
+
 	headerinfo->Release();
 	editor->Release();
+}
+
+std::filesystem::path CommandListFileMetadata::normaliseFilename() const
+{
+	const auto filename{ commandline.getAtKey(L"filename").second };
+	std::filesystem::path filenamePath{ filename };
+	if (filenamePath.has_parent_path())
+	{
+		return filenamePath;
+	}
+	else if (commandline.hasKey(L"path"))
+	{
+		const std::filesystem::path parentPath{ commandline.getAtKey(L"path").second };
+		return parentPath / filenamePath;
+	}
+	else
+	{
+		return std::filesystem::current_path() /= filenamePath;
+	}
 }

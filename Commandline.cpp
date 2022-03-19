@@ -21,7 +21,7 @@ bool Commandline::hasKey(std::wstring_view key) const noexcept
     return arguments.contains(std::wstring{ key });
 }
 
-std::pair<const std::wstring, std::wstring> Commandline::getAtKey(std::wstring_view key)
+std::pair<const std::wstring, std::wstring> Commandline::getAtKey(std::wstring_view key) const
 {
     std::wstring keyString{ key };
     const auto& value{ arguments.at(keyString) };
