@@ -109,18 +109,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="charconversion.cpp" />
-    <ClCompile Include="Command.cpp" />
-    <ClCompile Include="Commandline.cpp" />
-    <ClCompile Include="CommandListFileMetadata.cpp" />
-    <ClCompile Include="CommandListFolderMetadata.cpp" />
-    <ClCompile Include="CommandModifyFileMetadata.cpp" />
-    <ClCompile Include="CommandModifyFolderMetadata.cpp" />
-    <ClCompile Include="HelpCommand.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Win32Exception.ixx" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
     <Text Include="readme.txt">
@@ -137,6 +125,18 @@
     <ClInclude Include="include\CommandModifyFolderMetadata.h" />
     <ClInclude Include="include\HelpCommand.h" />
     <ClInclude Include="include\strings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\charconversion.cpp" />
+    <ClCompile Include="source\Command.cpp" />
+    <ClCompile Include="source\Commandline.cpp" />
+    <ClCompile Include="source\CommandListFileMetadata.cpp" />
+    <ClCompile Include="source\CommandListFolderMetadata.cpp" />
+    <ClCompile Include="source\CommandModifyFileMetadata.cpp" />
+    <ClCompile Include="source\CommandModifyFolderMetadata.cpp" />
+    <ClCompile Include="source\HelpCommand.cpp" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Win32Exception.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
