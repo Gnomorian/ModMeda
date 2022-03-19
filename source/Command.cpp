@@ -6,6 +6,19 @@
 #include "CommandModifyFolderMetadata.h"
 #include <fstream>
 
+auto ignoreCaseEquals(const auto& str1, const auto& str2) -> bool
+{
+	return std::is_permutation(
+		std::begin(str1),
+		std::end(str1),
+		std::begin(str2),
+		[](const auto& a, const auto& b)
+		{
+			return std::tolower(a) == std::tolower(b);
+		}
+	);
+}
+
 Command::Command()
 	: output{ new std::wofstream{} }
 	, commandline{}
@@ -17,6 +30,53 @@ Command::Command(std::wostream* output, const Commandline& commandline)
 {}
 
 Command::~Command() = default;
+
+std::filesystem::path Command::normaliseFilename() const
+{
+	const auto filename{ commandline.getAtKey(L"filename").second };
+	std::filesystem::path filenamePath{ filename };
+	if (filenamePath.has_parent_path())
+	{
+		return filenamePath;
+	}
+	else if (commandline.hasKey(L"path"))
+	{
+		const std::filesystem::path parentPath{ commandline.getAtKey(L"path").second };
+		return parentPath / filenamePath;
+	}
+	else
+	{
+		return std::filesystem::current_path() /= filenamePath;
+	}
+}
+
+void Command::onEmptyPropertyGroup() 
+{}
+
+void Command::onAllPropertyGroup()
+{}
+
+void Command::onBasicPropertyGroup()
+{}
+
+void Command::handlePropertyGroupCase()
+{
+	if (!commandline.hasKey(L"propertygroup"))
+		onEmptyPropertyGroup();
+	else
+	{
+		const auto propertyGroup{ commandline.getAtKey(L"propertygroup").second };
+		if (ignoreCaseEquals(propertyGroup, L"all"))
+			onAllPropertyGroup();
+		else if (ignoreCaseEquals(propertyGroup, L"basic"))
+			onBasicPropertyGroup();
+		else
+		{
+			*output << L"Unknown property group '" << propertyGroup << L'\'' << std::endl;
+			HelpCommand{ output }.execute();
+		}
+	}
+}
 
 std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline)
 {

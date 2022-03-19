@@ -31,41 +31,7 @@ CommandListFileMetadata::CommandListFileMetadata(std::wostream* output, const Co
 // v|attribute|music|video|document
 void CommandListFileMetadata::execute()
 {
-	const auto filename{ normaliseFilename() };
-    if (!commandline.hasKey(L"propertygroup"))
-        listAllProperties(filename);
-    else
-    {
-        const auto propertyGroup{ commandline.getAtKey(L"propertygroup").second };
-        if (ignoreCaseEquals(propertyGroup, L"all"))
-            listAllProperties(filename);
-        else if (ignoreCaseEquals(propertyGroup, L"basic"))
-            listBasicProperties(filename);
-        else
-        {
-            *output << L"Unknown property group '" << propertyGroup << L'\'' << std::endl;
-            HelpCommand{ output }.execute();
-        }
-    }
-}
-
-std::filesystem::path CommandListFileMetadata::normaliseFilename() const
-{
-	const auto filename{ commandline.getAtKey(L"filename").second };
-	std::filesystem::path filenamePath{ filename };
-	if (filenamePath.has_parent_path())
-	{
-		return filenamePath;
-	}
-	else if (commandline.hasKey(L"path"))
-	{
-		const std::filesystem::path parentPath{ commandline.getAtKey(L"path").second };
-		return parentPath / filenamePath;
-	}
-	else
-	{
-		return std::filesystem::current_path() /= filenamePath;
-	}
+    handlePropertyGroupCase();
 }
 
 void CommandListFileMetadata::listAllProperties(const std::filesystem::path& filename) const
@@ -155,4 +121,14 @@ void CommandListFileMetadata::listAllProperties(const std::filesystem::path& fil
 
 void CommandListFileMetadata::listBasicProperties(const std::filesystem::path& filename) const
 {
+}
+
+void CommandListFileMetadata::onAllPropertyGroup()
+{
+    listAllProperties(normaliseFilename());
+}
+
+void CommandListFileMetadata::onBasicPropertyGroup()
+{
+    listBasicProperties(normaliseFilename());
 }
