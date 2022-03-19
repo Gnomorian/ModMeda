@@ -15,18 +15,19 @@ FileMetadata::FileMetadata(std::filesystem::path file)
     winrt::init_apartment();
 }
 
+auto getTm = [](const auto&& dateTime)
+{
+    using Type = DateTime;
+    const auto t_c{ Type::clock::to_time_t(dateTime) };
+    tm time{};
+    (void)localtime_s(&time, &t_c);
+    return time;
+};
+
 BasicProperties FileMetadata::basicProperties() const
 {
     const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
     const auto winrtprops{ file.GetBasicPropertiesAsync().get() };
-    using Type = decltype(winrtprops.DateModified());
-    auto getTm = [](const auto&& DateTime)
-    {
-        const auto t_c{ Type::clock::to_time_t(DateTime) };
-        tm time{};
-        (void)localtime_s(&time, &t_c);
-        return time;
-    };
     return BasicProperties{
         .dateModified{getTm(winrtprops.DateModified())},
         .itemDate{getTm(winrtprops.ItemDate())},
@@ -111,12 +112,47 @@ MusicProperties FileMetadata::musicProperties() const
 
 VideoProperties FileMetadata::videoProperties() const
 {
-    return VideoProperties();
+    const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
+    const auto videoProperties{ file.Properties().GetVideoPropertiesAsync().get() };
+
+    return VideoProperties{
+        .bitrate{videoProperties.Bitrate()},
+        .directors{ivecstrToStd(videoProperties.Directors())},
+        .duration{videoProperties.Duration()},
+        .height{videoProperties.Height()},
+        .keywords{ivecstrToStd(videoProperties.Keywords())},
+        .lattitude{videoProperties.Latitude().GetDouble()},
+        .longitude{videoProperties.Longitude().GetDouble()},
+        .orientation{static_cast<VideoProperties::VideoOrientation>(videoProperties.Orientation())},
+        .producers{ivecstrToStd(videoProperties.Producers())},
+        .publisher{static_cast<std::wstring>(videoProperties.Publisher())},
+        .rating{videoProperties.Rating()},
+        .subtitle{static_cast<std::wstring>(videoProperties.Subtitle())},
+        .title{static_cast<std::wstring>(videoProperties.Title())},
+        .width{videoProperties.Width()},
+        .writers{ivecstrToStd(videoProperties.Writers())},
+        .year{videoProperties.Year()}
+    };
 }
 
 ImageProperties FileMetadata::imageProperties() const
 {
-    return ImageProperties();
+    const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
+    const auto imageProperties{ file.Properties().GetImagePropertiesAsync().get() };
+    return ImageProperties{
+        .cameraManufacturer{static_cast<std::wstring>(imageProperties.CameraManufacturer())},
+        .cameraModel{static_cast<std::wstring>(imageProperties.CameraModel())},
+        .dateTaken{getTm(imageProperties.DateTaken())},
+        .height{imageProperties.Height()},
+        .keywords{ivecstrToStd(imageProperties.Keywords())},
+        .lattitude{imageProperties.Latitude().GetDouble()},
+        .longitude{imageProperties.Longitude().GetDouble()},
+        .orientation{static_cast<ImageProperties::PhotoOrientation>(imageProperties.Orientation())},
+        .peopleNames{ivecstrToStd(imageProperties.PeopleNames())},
+        .rating{imageProperties.Rating()},
+        .title{static_cast<std::wstring>(imageProperties.Title())},
+        .width{imageProperties.Width()},
+    };
 }
 
 PropertyVariant FileMetadata::propertyValueToVariant(const winrt::Windows::Foundation::IPropertyValue& property) const

@@ -207,7 +207,7 @@ struct VideoProperties
 	/// <summary>
 	/// duration of the video
 	/// </summary>
-	std::optional<std::chrono::duration<int64_t, std::milli>> duration;
+	std::optional<std::chrono::duration<int64_t, std::ratio_multiply<std::ratio<100>, std::nano>>> duration;
 	/// <summary>
 	/// height of the video
 	/// </summary>
@@ -233,9 +233,9 @@ struct VideoProperties
 	/// </summary>
 	std::optional<std::vector<std::wstring>> producers;
 	/// <summary>
-	/// publishers of the video
+	/// publisher of the video
 	/// </summary>
-	std::optional<std::vector<std::wstring>> publishers;
+	std::optional<std::wstring> publisher;
 	/// <summary>
 	/// rating associated with a music file
 	/// The media file rating, as a value between 0 and 99.
