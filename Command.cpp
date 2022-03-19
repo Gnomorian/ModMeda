@@ -18,22 +18,27 @@ std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline)
 {
 	// could be a file in the future or some other stream.
 	auto output{ &std::wcout };
-	const auto action{ commandline.getAtKey(L"action") };
-	if (action.second == L"list")
+	try
 	{
-		if (commandline.hasKey(L"filename"))
-			return std::make_unique<CommandListFileMetadata>(output, commandline);
-		else if (commandline.hasKey(L"filter"))
-			return std::make_unique<CommandListFolderMetadata>(output, commandline);
+		const auto action{ commandline.getAtKey(L"action") };
+		if (action.second == L"list")
+		{
+			if (commandline.hasKey(L"filename"))
+				return std::make_unique<CommandListFileMetadata>(output, commandline);
+			else if (commandline.hasKey(L"filter"))
+				return std::make_unique<CommandListFolderMetadata>(output, commandline);
+		}
+		if (action.second == L"modify")
+		{
+			if (commandline.hasKey(L"filename"))
+				return std::make_unique<CommandModifyFileMetadata>(output, commandline);
+			else if (commandline.hasKey(L"filter"))
+				return std::make_unique<CommandModifyFolderMetadata>(output, commandline);
+		}
 	}
-	if (action.second == L"modify")
+	catch (std::out_of_range&)
 	{
-		if (commandline.hasKey(L"filename"))
-			return std::make_unique<CommandModifyFileMetadata>(output, commandline);
-		else if (commandline.hasKey(L"filter"))
-			return std::make_unique<CommandModifyFolderMetadata>(output, commandline);
+		*output << L"did not supply list or modify, nothing to do!\n\n";
+		return std::make_unique<HelpCommand>(&std::wcout);
 	}
-
-	*output << L"did not supply list or modify, nothing to do!\n\n";
-	return std::make_unique<HelpCommand>(&std::wcout);
 }

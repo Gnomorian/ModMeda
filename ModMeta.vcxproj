@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -9,7 +9,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{ef24d46f-2a5a-471c-82fd-32a2e39db9be}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ModMetaWinRT</RootNamespace>
+    <RootNamespace>ModMeta</RootNamespace>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
@@ -63,7 +63,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <PreprocessorDefinitions>_CONSOLE;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -75,6 +75,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -84,6 +85,7 @@
   <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -92,6 +94,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp20</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -101,13 +105,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="charconversion.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Commandline.h" />
+    <ClInclude Include="CommandListFileMetadata.h" />
+    <ClInclude Include="CommandListFolderMetadata.h" />
+    <ClInclude Include="CommandModifyFileMetadata.h" />
+    <ClInclude Include="CommandModifyFolderMetadata.h" />
+    <ClInclude Include="HelpCommand.h" />
+    <ClInclude Include="strings.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="charconversion.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Commandline.cpp" />
+    <ClCompile Include="CommandListFileMetadata.cpp" />
+    <ClCompile Include="CommandListFolderMetadata.cpp" />
+    <ClCompile Include="CommandModifyFileMetadata.cpp" />
+    <ClCompile Include="CommandModifyFolderMetadata.cpp" />
+    <ClCompile Include="HelpCommand.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="Win32Exception.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -118,13 +136,13 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>
