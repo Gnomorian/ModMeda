@@ -80,3 +80,15 @@ void CommandListFileMetadata::onBasicPropertyGroup()
 {
     listBasicProperties(normaliseFilename());
 }
+
+void CommandListFileMetadata::onMusicPropertyGroup()
+{
+}
+
+void CommandListFileMetadata::onVideoPropertyGroup()
+{
+}
+
+void CommandListFileMetadata::onDocumentPropertyGroup()
+{
+}

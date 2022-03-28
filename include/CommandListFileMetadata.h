@@ -13,5 +13,8 @@ protected:
 	void onAllPropertyGroup() override;
 	void onEmptyPropertyGroup() override;
 	void onBasicPropertyGroup() override;
+	void onMusicPropertyGroup() override;
+	void onVideoPropertyGroup() override;
+	void onDocumentPropertyGroup() override;
 };
 

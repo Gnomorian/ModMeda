@@ -93,6 +93,22 @@ void Command::handlePropertyGroupCase()
 		{
 			onBasicPropertyGroup();
 		}
+		else if (ignoreCaseEquals(propertyGroup, L"document"))
+		{
+			onDocumentPropertyGroup();
+		}
+		else if (ignoreCaseEquals(propertyGroup, L"attribute"))
+		{
+			onAttriburePropertyGroup();
+		}
+		else if (ignoreCaseEquals(propertyGroup, L"music"))
+		{
+			onMusicPropertyGroup();
+		}
+		else if (ignoreCaseEquals(propertyGroup, L"video"))
+		{
+			onVideoPropertyGroup();
+		}
 		else
 		{
 			*output << L"Unknown property group '" << propertyGroup << L'\'' << std::endl;
