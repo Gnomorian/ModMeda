@@ -25,6 +25,7 @@ protected:
 	virtual void onMusicPropertyGroup();
 	virtual void onVideoPropertyGroup();
 	virtual void onAttriburePropertyGroup();
+	virtual void onImagePropertyGroup();
 };
 
 std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline);

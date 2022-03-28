@@ -10,28 +10,6 @@
 	all the properties are std::optional so they can be used to show a null value or tell WinRT to modify that property.
 */
 
-template<typename Duration, typename Elem>
-std::basic_ostream<Elem>& operator<<(std::basic_ostream<Elem>& stream, std::chrono::sys_time<Duration> time)
-{
-	constexpr auto formatStr{
-		[&] () consteval
-		{
-			using CharType = std::remove_reference_t<decltype(stream)>::char_type;
-			static_assert(std::is_same_v<CharType, wchar_t> || std::is_same_v<CharType, char>);
-			if constexpr (std::is_same_v<CharType, char>)
-			{
-				return "{:%F %H:%M:%OS}";
-			}
-			else if constexpr (std::is_same_v<CharType, wchar_t>)
-			{
-				return L"{:%F %H:%M:%OS}";
-			}
-		}()
-	};
-	stream << std::format(formatStr, time);
-	return stream;
-}
-
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.basicproperties?view=winrt-22000
 struct BasicProperties
 {
@@ -48,6 +26,8 @@ struct BasicProperties
 	/// the size of the file in bytes.
 	/// </summary>
 	std::optional<uint64_t> size;
+
+	friend std::wostream& operator<<(std::wostream& stream, const BasicProperties& properties);
 };
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.documentproperties?view=winrt-22000
@@ -69,6 +49,8 @@ struct DocumentProperties
 	/// title of the document
 	/// </summary>
 	std::optional<std::wstring> title;
+
+	friend std::wostream& operator<<(std::wostream& stream, const DocumentProperties& properties);
 };
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.imageproperties?view=winrt-22000
@@ -136,6 +118,8 @@ struct ImageProperties
 	/// width of the image
 	/// </summary>
 	std::optional<uint32_t> width;
+
+	friend std::wostream& operator<<(std::wostream& stream, const ImageProperties& properties);
 };
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.musicproperties?view=winrt-22000
@@ -207,6 +191,8 @@ struct MusicProperties
 	/// year that the song was released
 	/// </summary>
 	std::optional<uint32_t> year;
+
+	friend std::wostream& operator<<(std::wostream& stream, const MusicProperties& properties);
 };
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.videoproperties?view=winrt-22000
@@ -285,4 +271,6 @@ struct VideoProperties
 	/// year that the song was released
 	/// </summary>
 	std::optional<uint32_t> year;
+
+	friend std::wostream& operator<<(std::wostream& stream, const VideoProperties& properties);
 };

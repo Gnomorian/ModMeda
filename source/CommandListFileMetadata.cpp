@@ -8,6 +8,8 @@
 #include <iomanip>
 #include <chrono>
 #include "FileMetadata.h"
+#include <algorithm>
+#include <iterator>
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage;
@@ -57,15 +59,6 @@ void CommandListFileMetadata::listAllProperties(const std::filesystem::path& fil
     }
 }
 
-void CommandListFileMetadata::listBasicProperties(const std::filesystem::path& filename) const
-{
-    FileMetadata file{ filename };
-    const auto properties{ file.basicProperties() };
-    *output << L"DateModified = " <<  properties.dateModified.value() << std::endl
-        << L"ItemDate = " << properties.itemDate.value() << std::endl
-        << L"Size = " << properties.size.value() << std::endl;
-}
-
 void CommandListFileMetadata::onAllPropertyGroup()
 {
     listAllProperties(normaliseFilename());
@@ -78,17 +71,34 @@ void CommandListFileMetadata::onEmptyPropertyGroup()
 
 void CommandListFileMetadata::onBasicPropertyGroup()
 {
-    listBasicProperties(normaliseFilename());
+    FileMetadata file{ normaliseFilename() };
+    const auto properties{ file.basicProperties() };
+    *output << properties << std::endl;
 }
 
 void CommandListFileMetadata::onMusicPropertyGroup()
 {
+    FileMetadata file{ normaliseFilename() };
+    const auto properties{ file.musicProperties() };
+    *output << properties << std::endl;
 }
 
 void CommandListFileMetadata::onVideoPropertyGroup()
 {
+    FileMetadata file{ normaliseFilename() };
+    const auto properties{ file.videoProperties() };
+    *output << properties << std::endl;
 }
 
 void CommandListFileMetadata::onDocumentPropertyGroup()
 {
+    FileMetadata file{ normaliseFilename() };
+    const auto properties{ file.documentProperties() };
+    *output << properties << std::endl;
+}
+
+void CommandListFileMetadata::onImagePropertyGroup()
+{
+    FileMetadata file{ normaliseFilename() };
+    const auto properties{ file.videoProperties() };
 }

@@ -78,6 +78,9 @@ void Command::onVideoPropertyGroup()
 void Command::onAttriburePropertyGroup()
 {}
 
+void Command::onImagePropertyGroup()
+{}
+
 void Command::handlePropertyGroupCase()
 {
 	if (!commandline.hasKey(L"propertygroup"))
@@ -108,6 +111,10 @@ void Command::handlePropertyGroupCase()
 		else if (ignoreCaseEquals(propertyGroup, L"video"))
 		{
 			onVideoPropertyGroup();
+		}
+		else if (ignoreCaseEquals(propertyGroup, L"image"))
+		{
+			onImagePropertyGroup();
 		}
 		else
 		{
