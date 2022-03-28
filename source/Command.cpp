@@ -6,8 +6,10 @@
 #include "CommandModifyFolderMetadata.h"
 #include <fstream>
 
-auto ignoreCaseEquals(const auto& str1, const auto& str2) -> bool
+auto ignoreCaseEquals(const std::wstring_view& str1, const std::wstring_view& str2) -> bool
 {
+	if (std::size(str2) != std::size(str1))
+		return false;
 	return std::is_permutation(
 		std::begin(str1),
 		std::end(str1),
@@ -84,9 +86,13 @@ void Command::handlePropertyGroupCase()
 	{
 		const auto propertyGroup{ commandline.getAtKey(L"propertygroup").second };
 		if (ignoreCaseEquals(propertyGroup, L"all"))
+		{
 			onAllPropertyGroup();
+		}
 		else if (ignoreCaseEquals(propertyGroup, L"basic"))
+		{
 			onBasicPropertyGroup();
+		}
 		else
 		{
 			*output << L"Unknown property group '" << propertyGroup << L'\'' << std::endl;

@@ -2,6 +2,7 @@
 #include <chrono>
 #include <vector>
 #include <optional>
+#include <chrono>
 
 /*
 	basic structures for the different types of properties a file can have.
@@ -9,18 +10,40 @@
 	all the properties are std::optional so they can be used to show a null value or tell WinRT to modify that property.
 */
 
+template<typename Duration, typename Elem>
+std::basic_ostream<Elem>& operator<<(std::basic_ostream<Elem>& stream, std::chrono::sys_time<Duration> time)
+{
+	constexpr auto formatStr{
+		[&] () consteval
+		{
+			using CharType = std::remove_reference_t<decltype(stream)>::char_type;
+			static_assert(std::is_same_v<CharType, wchar_t> || std::is_same_v<CharType, char>);
+			if constexpr (std::is_same_v<CharType, char>)
+			{
+				return "{:%F %H:%M:%OS}";
+			}
+			else if constexpr (std::is_same_v<CharType, wchar_t>)
+			{
+				return L"{:%F %H:%M:%OS}";
+			}
+		}()
+	};
+	stream << std::format(formatStr, time);
+	return stream;
+}
+
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.basicproperties?view=winrt-22000
 struct BasicProperties
 {
 	/// <summary>
 	/// timestamp of the last time the file was modified.
 	/// </summary>
-	std::optional<tm> dateModified;
+	std::optional<std::chrono::sys_time<std::chrono::nanoseconds>> dateModified;
 	/// <summary>
 	/// the most relevant date for the item.
 	/// The system determines the most relevant date based on the type of the item. For example, if the item is a photo the date in System.Photo.DateTaken is returned. Or if the item is a song the date in System.Media.DateReleased is returned.
 	/// </summary>
-	std::optional<tm> itemDate;
+	std::optional<std::chrono::sys_time<std::chrono::nanoseconds>> itemDate;
 	/// <summary>
 	/// the size of the file in bytes.
 	/// </summary>

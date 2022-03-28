@@ -84,9 +84,6 @@
     <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Win32Exception.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\FileMetadata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

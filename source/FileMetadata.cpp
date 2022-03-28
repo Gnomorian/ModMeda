@@ -28,9 +28,10 @@ BasicProperties FileMetadata::basicProperties() const
 {
     const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
     const auto winrtprops{ file.GetBasicPropertiesAsync().get() };
+
     return BasicProperties{
-        .dateModified{getTm(winrtprops.DateModified())},
-        .itemDate{getTm(winrtprops.ItemDate())},
+        .dateModified{winrt::clock::to_sys(winrtprops.DateModified())},
+        .itemDate{winrt::clock::to_sys(winrtprops.ItemDate())},
         .size{winrtprops.Size()}
     };
 }

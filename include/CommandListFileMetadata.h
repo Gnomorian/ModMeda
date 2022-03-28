@@ -11,6 +11,7 @@ protected:
 	void listAllProperties(const std::filesystem::path& filename) const;
 	void listBasicProperties(const std::filesystem::path& filename) const;
 	void onAllPropertyGroup() override;
+	void onEmptyPropertyGroup() override;
 	void onBasicPropertyGroup() override;
 };
 
