@@ -100,5 +100,6 @@ void CommandListFileMetadata::onDocumentPropertyGroup()
 void CommandListFileMetadata::onImagePropertyGroup()
 {
     FileMetadata file{ normaliseFilename() };
-    const auto properties{ file.videoProperties() };
+    const auto properties{ file.imageProperties() };
+    *output << properties << std::endl;
 }

@@ -1,4 +1,5 @@
 #include "PropertyGroups.h"
+#include <winrt/Windows.Storage.h>
 
 template<typename Duration, typename Elem>
 std::basic_ostream<Elem>& operator<<(std::basic_ostream<Elem>& stream, std::chrono::sys_time<Duration> time)
@@ -48,13 +49,25 @@ std::wostream& operator<<(std::wostream& stream, const DocumentProperties& prope
 	stream << L"Author = " << properties.author.value() << std::endl
 		<< L"Comment = " << properties.comment.value() << std::endl
 		<< L"Keywords = " << properties.keywords.value() << std::endl
-		<< L"Title = " << properties.title.value() << std::endl;
+		<< L"Title = " << properties.title.value();
 	return stream;
 }
 
 std::wostream& operator<<(std::wostream& stream, const ImageProperties& properties)
 {
-	throw std::runtime_error{ "unimplemented formatting function" };
+	stream << L"CameraManufacturer = " << properties.cameraManufacturer.value() << std::endl
+		<< L"" << properties.cameraModel.value() << std::endl
+		<< L"" << properties.dateTaken.value() << std::endl
+		<< L"" << properties.height.value() << std::endl
+		<< L"" << properties.keywords.value() << std::endl
+		<< L"" << properties.lattitude.value() << std::endl
+		<< L"" << properties.longitude.value() << std::endl
+		<< L"" << static_cast<std::wstring_view>(properties.orientation.value()) << std::endl
+		<< L"" << properties.peopleNames.value() << std::endl
+		<< L"" << properties.rating.value() << std::endl
+		<< L"" << properties.title.value() << std::endl
+		<< L"" << properties.title.value() << std::endl
+		<< L"" << properties.width.value() << std::endl;
 	return stream;
 }
 
@@ -84,4 +97,26 @@ std::wostream& operator<<(std::wostream& stream, const VideoProperties& properti
 {
 	throw std::runtime_error{ "unimplemented formatting function" };
 	return stream;
+}
+
+ImageProperties::PhotoOrientation::PhotoOrientation()
+	: index{}
+{}
+
+ImageProperties::PhotoOrientation::PhotoOrientation(int32_t orientation)
+	:index{static_cast<uint8_t>(orientation)}
+{}
+
+ImageProperties::PhotoOrientation::PhotoOrientation(winrt::Windows::Storage::FileProperties::PhotoOrientation orientation)
+	: index{ static_cast<uint8_t>(static_cast<int32_t>(orientation)) }
+{}
+
+ImageProperties::PhotoOrientation::operator std::wstring_view() const
+{
+	return orientationByName[index];
+}
+
+ImageProperties::PhotoOrientation::operator winrt::Windows::Storage::FileProperties::PhotoOrientation() const
+{
+	return static_cast<winrt::Windows::Storage::FileProperties::PhotoOrientation>(index);
 }

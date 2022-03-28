@@ -53,21 +53,37 @@ struct DocumentProperties
 	friend std::wostream& operator<<(std::wostream& stream, const DocumentProperties& properties);
 };
 
+namespace winrt::Windows::Storage::FileProperties
+{
+	enum class PhotoOrientation : int32_t;
+}
+
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.imageproperties?view=winrt-22000
 struct ImageProperties
 {
-	enum class PhotoOrientation
+	class PhotoOrientation
 	{
-		Unspecified = 0,
-		Normal = 1,
-		FlipHorizontal = 2,
-		Rotate180 = 3,
-		FlipVertical = 4,
-		Transpose = 5,
-		Rotate270 = 6,
-		Transverse = 7,
-		Rotate90 = 8,
+		static inline constexpr std::wstring_view orientationByName[]
+		{
+			L"Unspecified",
+			L"Normal",
+			L"FlipHorizontal",
+			L"Rotate180",
+			L"FlipVertical",
+			L"Transpose",
+			L"Rotate270",
+			L"Transverse",
+			L"Rotate90",
+		};
+		uint8_t index;
+	public:
+		PhotoOrientation();
+		PhotoOrientation(int32_t orientation);
+		PhotoOrientation(winrt::Windows::Storage::FileProperties::PhotoOrientation orientation);
+		operator std::wstring_view() const;
+		operator winrt::Windows::Storage::FileProperties::PhotoOrientation() const;
 	};
+	
 	/// <summary>
 	/// manufacturer of the camera that took the photo
 	/// </summary>
@@ -79,7 +95,7 @@ struct ImageProperties
 	/// <summary>
 	/// date when the image was taken
 	/// </summary>
-	std::optional<tm> dateTaken;
+	std::optional<std::chrono::sys_time<std::chrono::nanoseconds>> dateTaken;
 	/// <summary>
 	/// height of the image
 	/// </summary>
@@ -103,7 +119,7 @@ struct ImageProperties
 	/// <summary>
 	/// names of people who are tagged in the photo
 	/// </summary>
-	std::vector<std::wstring> peopleNames;
+	std::optional<std::vector<std::wstring>> peopleNames;
 	/// <summary>
 	/// the rating associated with an image file.
 	/// The media file rating, as a value between 0 and 99.

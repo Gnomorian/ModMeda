@@ -140,14 +140,16 @@ ImageProperties FileMetadata::imageProperties() const
 {
     const auto file{ StorageFile::GetFileFromPathAsync(hstring{ filename.c_str() }).get() };
     const auto imageProperties{ file.Properties().GetImagePropertiesAsync().get() };
+    if (!imageProperties)
+        throw std::runtime_error{ "imageProperties didnt exist" };
     return ImageProperties{
         .cameraManufacturer{static_cast<std::wstring>(imageProperties.CameraManufacturer())},
         .cameraModel{static_cast<std::wstring>(imageProperties.CameraModel())},
-        .dateTaken{getTm(imageProperties.DateTaken())},
+        .dateTaken{winrt::clock::to_sys(imageProperties.DateTaken())},
         .height{imageProperties.Height()},
         .keywords{ivecstrToStd(imageProperties.Keywords())},
-        .lattitude{imageProperties.Latitude().GetDouble()},
-        .longitude{imageProperties.Longitude().GetDouble()},
+        .lattitude{imageProperties.Latitude() ? imageProperties.Latitude().GetDouble() : 0.0},
+        .longitude{imageProperties.Longitude() ? imageProperties.Longitude().GetDouble() : 0.0},
         .orientation{static_cast<ImageProperties::PhotoOrientation>(imageProperties.Orientation())},
         .peopleNames{ivecstrToStd(imageProperties.PeopleNames())},
         .rating{imageProperties.Rating()},
