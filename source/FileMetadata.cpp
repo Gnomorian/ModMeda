@@ -122,8 +122,8 @@ VideoProperties FileMetadata::videoProperties() const
         .duration{videoProperties.Duration()},
         .height{videoProperties.Height()},
         .keywords{ivecstrToStd(videoProperties.Keywords())},
-        .lattitude{videoProperties.Latitude().GetDouble()},
-        .longitude{videoProperties.Longitude().GetDouble()},
+        .lattitude{/*videoProperties.Latitude().GetDouble()*/0},//TODO: causes nullptr exception for some reason, perhaps because the property doesnt exit.
+        .longitude{/*videoProperties.Longitude().GetDouble()*/0},
         .orientation{static_cast<VideoProperties::VideoOrientation>(videoProperties.Orientation())},
         .producers{ivecstrToStd(videoProperties.Producers())},
         .publisher{static_cast<std::wstring>(videoProperties.Publisher())},

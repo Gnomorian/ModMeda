@@ -56,6 +56,7 @@ struct DocumentProperties
 namespace winrt::Windows::Storage::FileProperties
 {
 	enum class PhotoOrientation : int32_t;
+	enum class VideoOrientation : int32_t;
 }
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.imageproperties?view=winrt-22000
@@ -214,12 +215,16 @@ struct MusicProperties
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.videoproperties?view=winrt-22000
 struct VideoProperties
 {
-	enum class VideoOrientation
+	class VideoOrientation
 	{
-		Normal = 0,
-		Rotate180 = 180,
-		Rotate270 = 270,
-		Rotate90 = 90
+		static const std::pair<winrt::Windows::Storage::FileProperties::VideoOrientation, std::wstring_view> orientationByName[4];
+		uint8_t index;
+	public:
+		VideoOrientation();
+		VideoOrientation(int32_t orientation);
+		VideoOrientation(winrt::Windows::Storage::FileProperties::VideoOrientation orientation);
+		operator std::wstring_view() const;
+		operator winrt::Windows::Storage::FileProperties::VideoOrientation() const;
 	};
 	/// <summary>
 	/// sum audio and video bitrate of the video
