@@ -57,18 +57,17 @@ std::wostream& operator<<(std::wostream& stream, const DocumentProperties& prope
 std::wostream& operator<<(std::wostream& stream, const ImageProperties& properties)
 {
 	stream << L"CameraManufacturer = " << properties.cameraManufacturer.value() << std::endl
-		<< L"" << properties.cameraModel.value() << std::endl
-		<< L"" << properties.dateTaken.value() << std::endl
-		<< L"" << properties.height.value() << std::endl
-		<< L"" << properties.keywords.value() << std::endl
-		<< L"" << properties.lattitude.value() << std::endl
-		<< L"" << properties.longitude.value() << std::endl
-		<< L"" << static_cast<std::wstring_view>(properties.orientation.value()) << std::endl
-		<< L"" << properties.peopleNames.value() << std::endl
-		<< L"" << properties.rating.value() << std::endl
-		<< L"" << properties.title.value() << std::endl
-		<< L"" << properties.title.value() << std::endl
-		<< L"" << properties.width.value() << std::endl;
+		<< L"CameraModel = " << properties.cameraModel.value() << std::endl
+		<< L"DateTake = " << properties.dateTaken.value() << std::endl
+		<< L"Height = " << properties.height.value() << std::endl
+		<< L"Keywords = " << properties.keywords.value() << std::endl
+		<< L"Lattitude = " << properties.lattitude.value() << std::endl
+		<< L"Longitude = " << properties.longitude.value() << std::endl
+		<< L"Orientation = " << static_cast<std::wstring_view>(properties.orientation.value()) << std::endl
+		<< L"PeopleNames = " << properties.peopleNames.value() << std::endl
+		<< L"Rating = " << properties.rating.value() << std::endl
+		<< L"Title = " << properties.title.value() << std::endl
+		<< L"Width = " << properties.width.value();
 	return stream;
 }
 
