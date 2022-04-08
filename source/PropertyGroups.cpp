@@ -1,6 +1,5 @@
 #include "PropertyGroups.h"
 #include <winrt/Windows.Storage.h>
-#include <array>
 
 template<typename Duration, typename Elem>
 std::basic_ostream<Elem>& operator<<(std::basic_ostream<Elem>& stream, std::chrono::sys_time<Duration> time)
