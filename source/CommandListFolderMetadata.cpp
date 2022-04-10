@@ -67,7 +67,7 @@ void CommandListFolderMetadata::deferProcessing()
 	Commandline cmd;
 	for (const auto& file : files)
 	{
-		*output << L"---------------------------------------------------\n";
+		*output << L"---------------------------------------------------\n" << file << L"\n";
 		cmd.setKey(L"filename", file.filename().c_str());
 		cmd.setKey(L"path", file.parent_path().c_str());
 		CommandListFileMetadata fileMeta{ output, cmd };
