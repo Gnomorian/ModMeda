@@ -7,7 +7,8 @@
 /*
 	basic structures for the different types of properties a file can have.
 	this exists as a marchaling structure to seperate WinRT and application code.
-	all the properties are std::optional so they can be used to show a null value or tell WinRT to modify that property.
+	all the properties are std::optional so they can be used to show a 
+	null value during a get or tell WinRT to modify that property during a set.
 */
 
 // https://docs.microsoft.com/en-us/uwp/api/windows.storage.fileproperties.basicproperties?view=winrt-22000

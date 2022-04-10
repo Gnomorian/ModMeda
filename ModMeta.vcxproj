@@ -125,7 +125,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\charconversion.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Commandline.h" />
     <ClInclude Include="include\CommandListFileMetadata.h" />
@@ -138,7 +137,6 @@
     <ClInclude Include="include\strings.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\charconversion.cpp" />
     <ClCompile Include="source\Command.cpp" />
     <ClCompile Include="source\Commandline.cpp" />
     <ClCompile Include="source\CommandListFileMetadata.cpp" />
