@@ -4,6 +4,6 @@
 
 int wmain(int argc, wchar_t* args[])
 {
-	Commandline cmd{ argc, args };
+	auto cmd{ Commandline::setupCommandlineWithArgs(argc, args) };
 	makeCommandFromArgs(cmd)->execute();
 }

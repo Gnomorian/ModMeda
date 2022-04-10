@@ -4,9 +4,10 @@
 #include <span>
 #include <algorithm>
 
-std::map<std::wstring, std::wstring> Commandline::arguments;
+std::unique_ptr<const Commandline> Commandline::realCommandline;
 
 Commandline::Commandline()
+    : Commandline(*realCommandline.get())
 {
     assertArgumentsWereInitialized();
 }
@@ -26,6 +27,15 @@ std::pair<const std::wstring, std::wstring> Commandline::getAtKey(std::wstring_v
     std::wstring keyString{ key };
     const auto& value{ arguments.at(keyString) };
     return std::make_pair(std::move(keyString), value);
+}
+
+const Commandline& Commandline::setupCommandlineWithArgs(int argc, wchar_t* args[])
+{
+    if (realCommandline == nullptr)
+    {
+        realCommandline.reset(new Commandline{argc, args});
+    }
+    return *realCommandline.get();
 }
 
 void Commandline::initializeArguments(int argc, wchar_t* args[])
