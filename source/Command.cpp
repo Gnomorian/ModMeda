@@ -148,7 +148,7 @@ std::unique_ptr<Command> makeCommandFromArgs(Commandline& commandline)
 	}
 	catch (std::out_of_range&)
 	{
-		*output << L"did not supply list or modify, nothing to do!\n\n";
+		*output << L"did not supply list or modify, nothing to do!\n" << std::endl;
 	}
 	return std::make_unique<HelpCommand>(&std::wcout);
 }

@@ -38,55 +38,55 @@ std::wostream& operator<<(std::wostream& stream, const std::vector<std::wstring>
 
 std::wostream& operator<<(std::wostream& stream, const BasicProperties& properties)
 {
-	stream << L"DateModified = " << properties.dateModified.value() << std::endl
-		<< L"ItemDate = " << properties.itemDate.value() << std::endl
+	stream << L"DateModified = " << properties.dateModified.value() << L"\n"
+		<< L"ItemDate = " << properties.itemDate.value() << L"\n"
 		<< L"Size = " << properties.size.value();
 	return stream;
 }
 
 std::wostream& operator<<(std::wostream& stream, const DocumentProperties& properties)
 {
-	stream << L"Author = " << properties.author.value() << std::endl
-		<< L"Comment = " << properties.comment.value() << std::endl
-		<< L"Keywords = " << properties.keywords.value() << std::endl
+	stream << L"Author = " << properties.author.value() << L"\n"
+		<< L"Comment = " << properties.comment.value() << L"\n"
+		<< L"Keywords = " << properties.keywords.value() << L"\n"
 		<< L"Title = " << properties.title.value();
 	return stream;
 }
 
 std::wostream& operator<<(std::wostream& stream, const ImageProperties& properties)
 {
-	stream << L"CameraManufacturer = " << properties.cameraManufacturer.value() << std::endl
-		<< L"CameraModel = " << properties.cameraModel.value() << std::endl
-		<< L"DateTake = " << properties.dateTaken.value() << std::endl
-		<< L"Height = " << properties.height.value() << std::endl
-		<< L"Keywords = " << properties.keywords.value() << std::endl
-		<< L"Lattitude = " << properties.lattitude.value() << std::endl
-		<< L"Longitude = " << properties.longitude.value() << std::endl
-		<< L"Orientation = " << static_cast<std::wstring_view>(properties.orientation.value()) << std::endl
-		<< L"PeopleNames = " << properties.peopleNames.value() << std::endl
-		<< L"Rating = " << properties.rating.value() << std::endl
-		<< L"Title = " << properties.title.value() << std::endl
+	stream << L"CameraManufacturer = " << properties.cameraManufacturer.value() << L"\n"
+		<< L"CameraModel = " << properties.cameraModel.value() << L"\n"
+		<< L"DateTake = " << properties.dateTaken.value() << L"\n"
+		<< L"Height = " << properties.height.value() << L"\n"
+		<< L"Keywords = " << properties.keywords.value() << L"\n"
+		<< L"Lattitude = " << properties.lattitude.value() << L"\n"
+		<< L"Longitude = " << properties.longitude.value() << L"\n"
+		<< L"Orientation = " << static_cast<std::wstring_view>(properties.orientation.value()) << L"\n"
+		<< L"PeopleNames = " << properties.peopleNames.value() << L"\n"
+		<< L"Rating = " << properties.rating.value() << L"\n"
+		<< L"Title = " << properties.title.value() << L"\n"
 		<< L"Width = " << properties.width.value();
 	return stream;
 }
 
 std::wostream& operator<<(std::wostream& stream, const MusicProperties& properties)
 {
-	stream << L"Album = " << properties.album.value() << std::endl
-		<< L"AlbumArtist = " << properties.albumArtist.value() << std::endl
-		<< L"Artist = " << properties.artist.value() << std::endl
-		<< L"Bitrate = " << properties.bitrate.value() << std::endl
-		<< L"Composers = " << properties.composers.value() << std::endl
-		<< L"Conductors = " << properties.conductors.value() << std::endl
-		<< L"Duration = " << properties.duration.value() << std::endl
-		<< L"Genre = " << properties.genre.value() << std::endl
-		<< L"Producers = " << properties.producers.value() << std::endl
-		<< L"Publisher = " << properties.publisher.value() << std::endl
-		<< L"Rating = " << properties.rating.value() << std::endl
-		<< L"Subtitle = " << properties.subtitle.value() << std::endl
-		<< L"Title = " << properties.title.value() << std::endl
-		<< L"TrackNumber = " << properties.trackNumber.value() << std::endl
-		<< L"Writers = " << properties.writers.value() << std::endl
+	stream << L"Album = " << properties.album.value() << L"\n"
+		<< L"AlbumArtist = " << properties.albumArtist.value() << L"\n"
+		<< L"Artist = " << properties.artist.value() << L"\n"
+		<< L"Bitrate = " << properties.bitrate.value() << L"\n"
+		<< L"Composers = " << properties.composers.value() << L"\n"
+		<< L"Conductors = " << properties.conductors.value() << L"\n"
+		<< L"Duration = " << properties.duration.value() << L"\n"
+		<< L"Genre = " << properties.genre.value() << L"\n"
+		<< L"Producers = " << properties.producers.value() << L"\n"
+		<< L"Publisher = " << properties.publisher.value() << L"\n"
+		<< L"Rating = " << properties.rating.value() << L"\n"
+		<< L"Subtitle = " << properties.subtitle.value() << L"\n"
+		<< L"Title = " << properties.title.value() << L"\n"
+		<< L"TrackNumber = " << properties.trackNumber.value() << L"\n"
+		<< L"Writers = " << properties.writers.value() << L"\n"
 		<< L"Year = " << properties.year.value();
 
 	return stream;
@@ -94,22 +94,22 @@ std::wostream& operator<<(std::wostream& stream, const MusicProperties& properti
 
 std::wostream& operator<<(std::wostream& stream, const VideoProperties& properties)
 {
-	stream << L"Bitrate = " << properties.bitrate.value() << std::endl
-		<< L"Directors = " << properties.directors.value() << std::endl
-		<< L"Duration = " << properties.duration.value() << std::endl
-		<< L"Height = " << properties.height.value() << std::endl
-		<< L"Keywords = " << properties.keywords.value() << std::endl
-		<< L"Lattitude = " << properties.lattitude.value() << std::endl
-		<< L"Longitude = " << properties.longitude.value() << std::endl
-		<< L"Orientation = " << static_cast<std::wstring_view>(properties.orientation.value()) << std::endl
-		<< L"Producers = " << properties.producers.value() << std::endl
-		<< L"Publisher = " << properties.publisher.value() << std::endl
-		<< L"Rating = " << properties.rating.value() << std::endl
-		<< L"Subtitle = " << properties.subtitle.value() << std::endl
-		<< L"Title = " << properties.title.value() << std::endl
-		<< L"Width = " << properties.width.value() << std::endl
-		<< L"Writers = " << properties.writers.value() << std::endl
-		<< L"Year = " << properties.year.value() << std::endl;
+	stream << L"Bitrate = " << properties.bitrate.value() << L"\n"
+		<< L"Directors = " << properties.directors.value() << L"\n"
+		<< L"Duration = " << properties.duration.value() << L"\n"
+		<< L"Height = " << properties.height.value() << L"\n"
+		<< L"Keywords = " << properties.keywords.value() << L"\n"
+		<< L"Lattitude = " << properties.lattitude.value() << L"\n"
+		<< L"Longitude = " << properties.longitude.value() << L"\n"
+		<< L"Orientation = " << static_cast<std::wstring_view>(properties.orientation.value()) << L"\n"
+		<< L"Producers = " << properties.producers.value() << L"\n"
+		<< L"Publisher = " << properties.publisher.value() << L"\n"
+		<< L"Rating = " << properties.rating.value() << L"\n"
+		<< L"Subtitle = " << properties.subtitle.value() << L"\n"
+		<< L"Title = " << properties.title.value() << L"\n"
+		<< L"Width = " << properties.width.value() << L"\n"
+		<< L"Writers = " << properties.writers.value() << L"\n"
+		<< L"Year = " << properties.year.value();
 	return stream;
 }
 

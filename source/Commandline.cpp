@@ -33,7 +33,7 @@ const Commandline& Commandline::setupCommandlineWithArgs(int argc, wchar_t* args
 {
     if (realCommandline == nullptr)
     {
-        realCommandline.reset(new Commandline{argc, args});
+        realCommandline.reset(new Commandline{argc, args}); // protected constructor, so no make_unique
     }
     return *realCommandline.get();
 }
