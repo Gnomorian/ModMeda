@@ -16,6 +16,7 @@ public:
 	bool hasKey(std::wstring_view key) const noexcept;
 	std::pair<const std::wstring, std::wstring> getAtKey(std::wstring_view key) const;
 	static const Commandline& setupCommandlineWithArgs(int argc, wchar_t* args[]);
+	void setKey(std::wstring_view key, std::wstring_view value);
 protected:
 	Commandline(int argc, wchar_t* args[]);
 	void initializeArguments(int argc, wchar_t* args[]);

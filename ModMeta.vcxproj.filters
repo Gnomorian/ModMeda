@@ -55,6 +55,9 @@
     <ClInclude Include="include\CommandModifyFolderMetadata.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
+    <ClInclude Include="include\FolderFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Commandline.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="source\CommandModifyFolderMetadata.cpp">
       <Filter>Source Files\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FolderFilter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

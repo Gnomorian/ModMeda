@@ -38,6 +38,11 @@ const Commandline& Commandline::setupCommandlineWithArgs(int argc, wchar_t* args
     return *realCommandline.get();
 }
 
+void Commandline::setKey(std::wstring_view key, std::wstring_view value)
+{
+    arguments[key.data()] = value;
+}
+
 void Commandline::initializeArguments(int argc, wchar_t* args[])
 {
     arguments.clear();

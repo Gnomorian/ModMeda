@@ -141,6 +141,7 @@
     <ClInclude Include="include\CommandModifyFileMetadata.h" />
     <ClInclude Include="include\CommandModifyFolderMetadata.h" />
     <ClInclude Include="include\FileMetadata.h" />
+    <ClInclude Include="include\FolderFilter.h" />
     <ClInclude Include="include\HelpCommand.h" />
     <ClInclude Include="include\PropertyGroups.h" />
     <ClInclude Include="include\strings.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="source\CommandModifyFileMetadata.cpp" />
     <ClCompile Include="source\CommandModifyFolderMetadata.cpp" />
     <ClCompile Include="source\FileMetadata.cpp" />
+    <ClCompile Include="source\FolderFilter.cpp" />
     <ClCompile Include="source\HelpCommand.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\PropertyGroups.cpp" />

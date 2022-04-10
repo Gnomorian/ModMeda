@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
-class CommandListFolderMetadata : public Command
+#include "FolderFilter.h"
+class CommandListFolderMetadata : public Command, FolderFilter
 {
 public:
 	CommandListFolderMetadata(std::wostream* output, const Commandline& commandline);
@@ -13,5 +14,6 @@ public:
 	void onVideoPropertyGroup() override;
 	void onAttriburePropertyGroup() override;
 	void onImagePropertyGroup() override;
+	void deferProcessing();
 };
 
