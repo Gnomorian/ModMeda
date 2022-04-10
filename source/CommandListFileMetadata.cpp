@@ -20,7 +20,18 @@ CommandListFileMetadata::CommandListFileMetadata(std::wostream* output, const Co
 // v|attribute|music|video|document
 void CommandListFileMetadata::execute()
 {
-    handlePropertyGroupCase();
+    try
+    {
+        handlePropertyGroupCase();
+    }
+    catch (std::exception& e)
+    {
+        *output << e.what() << " Exception during getting info for " << normaliseFilename() << std::endl;
+    }
+    catch (winrt::hresult_error& e)
+    {
+        *output << L"(" << e.code() << L") " << e.message().c_str() << " Exception during getting info for " << normaliseFilename() << std::endl;
+    }
 }
 
 void CommandListFileMetadata::listAllProperties(const std::filesystem::path& filename) const
