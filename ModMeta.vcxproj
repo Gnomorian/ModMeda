@@ -86,6 +86,9 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)include</AdditionalIncludeDirectories>
+      <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">InheritWarningLevel</ExternalWarningLevel>
+      <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DisableAnalyzeExternal>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -97,6 +100,9 @@
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)include</AdditionalIncludeDirectories>
+      <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">InheritWarningLevel</ExternalWarningLevel>
+      <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DisableAnalyzeExternal>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -109,6 +115,12 @@
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)include</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)include</AdditionalIncludeDirectories>
+      <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InheritWarningLevel</ExternalWarningLevel>
+      <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DisableAnalyzeExternal>
+      <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">InheritWarningLevel</ExternalWarningLevel>
+      <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DisableAnalyzeExternal>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,9 +132,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
-    <Text Include="readme.txt">
-      <DeploymentContent>false</DeploymentContent>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Command.h" />
