@@ -1,5 +1,7 @@
 #include "PropertyGroups.h"
 #include <winrt/Windows.Storage.h>
+#include <array>
+#include <stdexcept>
 
 template<typename Duration, typename Elem>
 std::basic_ostream<Elem>& operator<<(std::basic_ostream<Elem>& stream, std::chrono::sys_time<Duration> time)
@@ -165,4 +167,33 @@ ImageProperties::PhotoOrientation::operator std::wstring_view() const
 ImageProperties::PhotoOrientation::operator winrt::Windows::Storage::FileProperties::PhotoOrientation() const
 {
 	return static_cast<winrt::Windows::Storage::FileProperties::PhotoOrientation>(index);
+}
+
+DocumentProperties& DocumentProperties::operator<<(const std::pair < std::wstring_view, std::wstring_view>& newMemberVariable)
+{
+	auto& [key, value] {newMemberVariable};
+	constexpr std::array<std::wstring_view, 4> memberNames{ {L"author", L"comment", L"keywords", L"title"} };
+	if (key == L"author")
+	{
+		//TODO: parse string into std::vector<std::wstring>
+		//author = value;
+	}
+	else if (key == L"comment")
+	{
+		comment = value;
+	}
+	else if (key == L"keywords")
+	{
+		//TODO: parse string into std::vector<std::wstring>
+		//keywords = value;
+	}
+	else if (key == L"title")
+	{
+		title = value;
+	}
+	else
+	{
+		throw std::out_of_range{ "DocumentProperties doesn't have a property with that name." };
+	}
+	return *this;
 }

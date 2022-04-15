@@ -3,6 +3,7 @@
 #include <vector>
 #include <optional>
 #include <chrono>
+#include <variant>
 
 /*
 	basic structures for the different types of properties a file can have.
@@ -50,7 +51,12 @@ struct DocumentProperties
 	/// title of the document
 	/// </summary>
 	std::optional<std::wstring> title;
-
+	/// <summary>
+	/// sets a property in this structure
+	/// </summary>
+	/// <param name="value">the name of the property with a union of the value</param>
+	/// <returns>self</returns>
+	DocumentProperties& operator<<(const std::pair < std::wstring_view, std::wstring_view>& newMemberVariable);
 	friend std::wostream& operator<<(std::wostream& stream, const DocumentProperties& properties);
 };
 
